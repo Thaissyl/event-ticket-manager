@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.sepay.vn)",
+      "WebFetch(domain:vietqr.io)",
+      "WebFetch(domain:developer.sepay.vn)",
+      "WebFetch(domain:api.vietqr.io)",
+      "Bash(where:*)",
+      "Bash(C:/Users/duyth/.claude/skills/.venv/Scripts/python.exe:*)"
+    ]
+  }
+}
