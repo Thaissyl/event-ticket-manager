@@ -1,0 +1,12 @@
+D:\event-ticket-manager\src\backend\EventTickets.Core\bin\Debug\net8.0\EventTickets.Core.deps.json
+D:\event-ticket-manager\src\backend\EventTickets.Core\bin\Debug\net8.0\EventTickets.Core.dll
+D:\event-ticket-manager\src\backend\EventTickets.Core\bin\Debug\net8.0\EventTickets.Core.pdb
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\EventTickets.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\EventTickets.Core.AssemblyInfoInputs.cache
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\EventTickets.Core.AssemblyInfo.cs
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\EventTickets.Core.csproj.CoreCompileInputs.cache
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\EventTickets.Core.sourcelink.json
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\EventTickets.Core.dll
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\refint\EventTickets.Core.dll
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\EventTickets.Core.pdb
+D:\event-ticket-manager\src\backend\EventTickets.Core\obj\Debug\net8.0\ref\EventTickets.Core.dll

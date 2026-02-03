@@ -1,0 +1,16 @@
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\bin\Debug\net8.0\EventTickets.Infrastructure.deps.json
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\bin\Debug\net8.0\EventTickets.Infrastructure.dll
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\bin\Debug\net8.0\EventTickets.Infrastructure.pdb
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\bin\Debug\net8.0\EventTickets.Core.dll
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\bin\Debug\net8.0\EventTickets.Core.pdb
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.csproj.AssemblyReference.cache
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.AssemblyInfoInputs.cache
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.AssemblyInfo.cs
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.csproj.CoreCompileInputs.cache
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.sourcelink.json
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTic.67C127FA.Up2Date
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.dll
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\refint\EventTickets.Infrastructure.dll
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\EventTickets.Infrastructure.pdb
+D:\event-ticket-manager\src\backend\EventTickets.Infrastructure\obj\Debug\net8.0\ref\EventTickets.Infrastructure.dll
