@@ -1,0 +1,49 @@
+{
+  "runtime": "Net80",
+  "documentGenerator": {
+    "aspNetCoreToOpenApi": {
+      "project": "src/backend/EventTickets.API/EventTickets.API.csproj",
+      "documentName": "v1",
+      "defaultUrlTemplate": "{controller}/{action}/{id?}"
+    }
+  },
+  "codeGenerators": {
+    "openApiToTypeScriptClient": {
+      "className": "ApiClient",
+      "moduleName": "",
+      "namespace": "",
+      "typeScriptVersion": 5.0,
+      "template": "Fetch",
+      "promiseType": "Promise",
+      "httpClass": "HttpClient",
+      "withCredentials": true,
+      "useSingletonProvider": false,
+      "generateClientClasses": true,
+      "generateClientInterfaces": true,
+      "generateOptionalParameters": true,
+      "exportTypes": true,
+      "wrapDtoExceptions": false,
+      "exceptionClass": "ApiException",
+      "clientBaseClass": null,
+      "wrapResponses": false,
+      "generateResponseClasses": true,
+      "responseClass": "SwaggerResponse",
+      "protectedMethods": [],
+      "configurationClass": null,
+      "useTransformOptionsMethod": false,
+      "useTransformResultMethod": false,
+      "generateDtoTypes": true,
+      "operationGenerationMode": "MultipleClientsFromOperationId",
+      "markOptionalProperties": true,
+      "generateCloneMethod": false,
+      "typeStyle": "Interface",
+      "enumStyle": "Enum",
+      "useLeafType": false,
+      "classTypes": [],
+      "extendedClasses": [],
+      "extensionCode": null,
+      "generateDefaultValues": true,
+      "output": "src/frontend/src/lib/api-client.ts"
+    }
+  }
+}

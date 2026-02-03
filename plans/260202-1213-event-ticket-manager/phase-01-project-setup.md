@@ -6,9 +6,10 @@
 
 ## Overview
 - **Priority:** P1 (Critical - blocks all other phases)
-- **Status:** pending
-- **Effort:** 4h
+- **Status:** needs-verification ⚠️
+- **Effort:** 4h (3.5h complete, 0.5h security fixes needed)
 - **Description:** Initialize monorepo structure, configure Docker, setup development environment
+- **Review:** [Code Review Report](../reports/code-reviewer-260203-2046-phase01-setup.md) - Score 6.5/10
 
 ## Key Insights
 - Monorepo with `src/frontend` and `src/backend` directories
@@ -137,14 +138,15 @@ event-ticket-manager/
 - [ ] Add pre-build hook to regenerate types
 
 ## Todo List
-- [ ] Create monorepo directory structure
-- [ ] Initialize Next.js 14 project
-- [ ] Initialize ASP.NET Core solution
-- [ ] Configure Tailwind + shadcn/ui
-- [ ] Setup Docker Compose
-- [ ] Configure NSwag type generation
-- [ ] Create environment variable templates
-- [ ] Test full development workflow
+- [x] Create monorepo directory structure
+- [x] Initialize Next.js 14 project
+- [x] Initialize ASP.NET Core solution
+- [x] Configure Tailwind + shadcn/ui
+- [x] Setup Docker Compose
+- [x] Configure NSwag type generation
+- [x] Create environment variable templates
+- [ ] Fix security issues (CRITICAL - see review report)
+- [ ] Test full development workflow (Docker verification failed)
 
 ## Success Criteria
 - [ ] `docker-compose -f docker-compose.dev.yml up` starts all services
@@ -166,6 +168,18 @@ event-ticket-manager/
 - Never commit `.env` files (use `.env.example`)
 - Use Docker secrets for production credentials
 - Ensure PostgreSQL password is strong
+
+## Security Fixes Required (Pre-Phase 02) 🔴
+- [ ] Remove password defaults from `docker-compose.yml`
+- [ ] Make CORS origins environment-configurable in `Program.cs`
+- [ ] Add `output: 'standalone'` to `next.config.ts`
+- [ ] Create `.dockerignore` files (backend and frontend)
+- [ ] Remove database port exposure (5432) in production compose
+- [ ] Add HTTPS redirection middleware for production
+- [ ] Add security headers middleware (X-Frame-Options, CSP, etc.)
+- [ ] Add rate limiting and request size limits
+- [ ] Configure structured logging
+- [ ] Verify Docker services start successfully
 
 ## Next Steps
 After completion, proceed to [Phase 02: Database Schema](phase-02-database-schema.md)
