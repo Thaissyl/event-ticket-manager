@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+WORKDIR /app
+
+COPY EventTickets.sln .
+COPY EventTickets.API/EventTickets.API.csproj EventTickets.API/
+COPY EventTickets.Core/EventTickets.Core.csproj EventTickets.Core/
+COPY EventTickets.Infrastructure/EventTickets.Infrastructure.csproj EventTickets.Infrastructure/
+
+RUN dotnet restore
+
+EXPOSE 5000
+ENV ASPNETCORE_URLS=http://+:5000
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+CMD ["dotnet", "watch", "run", "--project", "EventTickets.API"]

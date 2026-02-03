@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: etm-postgres-dev
+    environment:
+      POSTGRES_DB: event_tickets
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.dev
+    container_name: etm-backend-dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=event_tickets;Username=postgres;Password=postgres
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src/backend:/app
+      - /app/EventTickets.API/bin
+      - /app/EventTickets.API/obj
+      - /app/EventTickets.Core/bin
+      - /app/EventTickets.Core/obj
+      - /app/EventTickets.Infrastructure/bin
+      - /app/EventTickets.Infrastructure/obj
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["dotnet", "watch", "run", "--project", "EventTickets.API"]
+
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile.dev
+    container_name: etm-frontend-dev
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - WATCHPACK_POLLING=true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src/frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+    command: ["npm", "run", "dev"]
+
+volumes:
+  postgres_dev_data:
