@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EventTickets.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61258bd0a1bff5818bf750eae0018e55136e3e73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c744206752d4d5524a9b26c01bc822022ac6d9c")]
 [assembly: System.Reflection.AssemblyProductAttribute("EventTickets.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EventTickets.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
