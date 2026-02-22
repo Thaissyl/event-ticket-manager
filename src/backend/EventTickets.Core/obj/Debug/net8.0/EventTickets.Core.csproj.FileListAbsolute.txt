@@ -22,3 +22,4 @@ D:/event-ticket-manager/src/backend/EventTickets.Core/obj/Debug/net8.0/ref/Event
 /home/thaibeo/event-ticket-manager/src/backend/EventTickets.Core/obj/Debug/net8.0/refint/EventTickets.Core.dll
 /home/thaibeo/event-ticket-manager/src/backend/EventTickets.Core/obj/Debug/net8.0/EventTickets.Core.pdb
 /home/thaibeo/event-ticket-manager/src/backend/EventTickets.Core/obj/Debug/net8.0/ref/EventTickets.Core.dll
+/home/thaibeo/event-ticket-manager/src/backend/EventTickets.Core/obj/Debug/net8.0/EventTickets.Core.csproj.AssemblyReference.cache
