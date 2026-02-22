@@ -29,7 +29,10 @@
       "Bash(echo No credential config found:*)",
       "Bash(gh auth:*)",
       "Bash(git config:*)",
-      "Bash(env:*)"
+      "Bash(env:*)",
+      "Bash(cd /home/thaibeo/event-ticket-manager/src/backend && dotnet restore && dotnet build --no-restore 2>&1)",
+      "Bash(dotnet restore:*)",
+      "Bash(chmod +x:*)"
     ]
   },
   "spinnerTipsEnabled": true
