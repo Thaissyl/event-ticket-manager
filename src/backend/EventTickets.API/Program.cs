@@ -1,5 +1,9 @@
+using EventTickets.API.Endpoints;
+using EventTickets.API.Middleware;
 using EventTickets.Core.Entities;
+using EventTickets.Core.Interfaces;
 using EventTickets.Infrastructure.Data;
+using EventTickets.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,9 +16,13 @@ builder.WebHost.ConfigureKestrel(options =>
     options.Limits.MaxConcurrentConnections = 100;
 });
 
-// Add DbContext
+// Validate and add DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+    throw new InvalidOperationException("Database connection string 'DefaultConnection' is missing or empty.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 // Add ASP.NET Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
@@ -27,6 +35,25 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
+
+// Add MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+// Register Repositories
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<ITicketTierRepository, TicketTierRepository>();
+
+// Configure rate limiting
+builder.Services.Configure<RateLimitOptions>(options =>
+{
+    options.RequestLimit = 100;
+    options.Window = TimeSpan.FromMinutes(1);
+});
+
+// Add Authentication & Authorization
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
@@ -47,6 +74,14 @@ builder.Services.AddSwaggerGen(options =>
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
     });
+
+    // Include XML comments if available
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
 });
 
 // Add CORS for frontend - configurable via environment
@@ -66,11 +101,20 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Middleware pipeline
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<RateLimitingMiddleware>();
+
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.RoutePrefix = "swagger";
+        options.DocumentTitle = "Event Tickets API";
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    });
 }
 else
 {
@@ -108,5 +152,8 @@ app.MapGet("/api/v1/info", () => new
 .WithName("GetApiInfo")
 .WithTags("System")
 .WithOpenApi();
+
+// Register endpoints
+app.MapEndpoints();
 
 app.Run();
