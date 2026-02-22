@@ -14,6 +14,7 @@ public class Ticket
     public TicketStatus Status { get; set; }
     public DateTime? CheckedInAt { get; set; }
     public DateTime CreatedAt { get; set; }
+    public uint RowVersion { get; set; }
 
     // Navigation properties
     public virtual Order Order { get; set; } = null!;

@@ -13,6 +13,7 @@ public class Order
     public string PaymentCode { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public uint RowVersion { get; set; }
 
     // Navigation properties
     public virtual ApplicationUser? User { get; set; }
