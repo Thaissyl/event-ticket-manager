@@ -23,5 +23,6 @@
       "Bash(npx repomix:*)",
       "Bash(wc:*)"
     ]
-  }
+  },
+  "spinnerTipsEnabled": true
 }

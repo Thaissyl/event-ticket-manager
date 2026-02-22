@@ -517,42 +517,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\duyth\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/home/thaibeo/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\event-ticket-manager\\src\\backend\\EventTickets.API\\EventTickets.API.csproj",
+      "projectUniqueName": "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.API/EventTickets.API.csproj",
       "projectName": "EventTickets.API",
-      "projectPath": "D:\\event-ticket-manager\\src\\backend\\EventTickets.API\\EventTickets.API.csproj",
-      "packagesPath": "C:\\Users\\duyth\\.nuget\\packages\\",
-      "outputPath": "D:\\event-ticket-manager\\src\\backend\\EventTickets.API\\obj\\",
+      "projectPath": "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.API/EventTickets.API.csproj",
+      "packagesPath": "/home/thaibeo/.nuget/packages/",
+      "outputPath": "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.API/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\duyth\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/thaibeo/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\event-ticket-manager\\src\\backend\\EventTickets.Core\\EventTickets.Core.csproj": {
-              "projectPath": "D:\\event-ticket-manager\\src\\backend\\EventTickets.Core\\EventTickets.Core.csproj"
+            "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.Core/EventTickets.Core.csproj": {
+              "projectPath": "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.Core/EventTickets.Core.csproj"
             },
-            "D:\\event-ticket-manager\\src\\backend\\EventTickets.Infrastructure\\EventTickets.Infrastructure.csproj": {
-              "projectPath": "D:\\event-ticket-manager\\src\\backend\\EventTickets.Infrastructure\\EventTickets.Infrastructure.csproj"
+            "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.Infrastructure/EventTickets.Infrastructure.csproj": {
+              "projectPath": "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.Infrastructure/EventTickets.Infrastructure.csproj"
             }
           }
         }
@@ -561,13 +554,7 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -601,7 +588,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.124/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

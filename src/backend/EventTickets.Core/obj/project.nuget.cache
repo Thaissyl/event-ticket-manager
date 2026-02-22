@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QE2aT/os6+c=",
+  "dgSpecHash": "L/pF0p+oXYZreuIjWcdx4zjmovkGLX9ID37yl+xk+cpo0fQtODUebBXVXgu2zYf9l6PA+HBfNMH27sEigRb9fQ==",
   "success": true,
-  "projectFilePath": "D:\\event-ticket-manager\\src\\backend\\EventTickets.Core\\EventTickets.Core.csproj",
+  "projectFilePath": "/home/thaibeo/event-ticket-manager/src/backend/EventTickets.Core/EventTickets.Core.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

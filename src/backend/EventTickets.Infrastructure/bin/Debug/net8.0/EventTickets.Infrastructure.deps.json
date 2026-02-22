@@ -16,10 +16,7 @@
       },
       "EventTickets.Core/1.0.0": {
         "runtime": {
-          "EventTickets.Core.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "EventTickets.Core.dll": {}
         }
       }
     }

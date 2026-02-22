@@ -1,5 +1,12 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel limits
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 10 * 1024 * 1024; // 10MB
+    options.Limits.MaxConcurrentConnections = 100;
+});
+
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
