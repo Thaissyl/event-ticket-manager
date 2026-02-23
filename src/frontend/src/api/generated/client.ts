@@ -14,6 +14,8 @@ import type {
   OrderResponse,
   TicketResponse,
   CreateEventRequest,
+  UpdateEventRequest,
+  EventListResponse,
   CreateTicketTierRequest,
   AddToCartRequest,
   CreateOrderRequest,
@@ -24,11 +26,37 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 class ApiClient {
   private baseUrl: string;
   private defaultHeaders: HeadersInit;
+  private token: string | null = null;
 
   constructor(baseUrl: string = API_BASE_URL) {
     this.baseUrl = baseUrl;
     this.defaultHeaders = {
       'Content-Type': 'application/json',
+    };
+    // Load token from localStorage on client side
+    if (typeof window !== 'undefined') {
+      this.token = localStorage.getItem('auth_token');
+    }
+  }
+
+  setToken(token: string) {
+    this.token = token;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('auth_token', token);
+    }
+  }
+
+  clearToken() {
+    this.token = null;
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('auth_token');
+    }
+  }
+
+  private getAuthHeaders(): HeadersInit {
+    if (!this.token) return {};
+    return {
+      'Authorization': `Bearer ${this.token}`,
     };
   }
 
@@ -82,6 +110,33 @@ class ApiClient {
   async deleteEvent(id: string): Promise<void> {
     return this.request<void>(`/events/${id}`, {
       method: 'DELETE',
+    });
+  }
+
+  async getMyEvents(): Promise<EventResponse[]> {
+    return this.request<EventResponse[]>('/events/my', {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  async publishEvent(id: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>(`/events/${id}/publish`, {
+      method: 'POST',
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  async cancelEvent(id: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>(`/events/${id}/cancel`, {
+      method: 'POST',
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  async completeEvent(id: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>(`/events/${id}/complete`, {
+      method: 'POST',
+      headers: this.getAuthHeaders(),
     });
   }
 

@@ -14,12 +14,12 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-2">
-            <Link href="/login">
+            <Link href="/events">
               <Button size="lg" className="w-full" variant="outline">
                 Browse Events
               </Button>
             </Link>
-            <Link href="/login">
+            <Link href="/dashboard">
               <Button size="lg" className="w-full">
                 Organizer Dashboard
               </Button>

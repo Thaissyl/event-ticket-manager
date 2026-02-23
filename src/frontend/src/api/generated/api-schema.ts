@@ -100,6 +100,27 @@ export interface CreateEventRequest {
   totalCapacity: number;
 }
 
+export interface UpdateEventRequest {
+  title: string;
+  description?: string;
+  venueName: string;
+  venueAddress: string;
+  venueCity: string;
+  startDateTime: string;
+  endDateTime: string;
+  imageUrl?: string;
+  totalCapacity: number;
+  status: 'Draft' | 'Published' | 'Cancelled' | 'Completed';
+}
+
+export interface EventListResponse {
+  events: EventResponse[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+}
+
 // User and Auth types
 export type UserRole = 'Admin' | 'Organizer' | 'Attendee';
 
