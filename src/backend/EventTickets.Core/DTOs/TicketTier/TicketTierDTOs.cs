@@ -1,5 +1,3 @@
-using EventTickets.Core.Entities;
-
 namespace EventTickets.Core.DTOs;
 
 public record TicketTierResponse(
