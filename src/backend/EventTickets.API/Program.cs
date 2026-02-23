@@ -1,11 +1,16 @@
+using System.Text;
 using EventTickets.API.Endpoints;
 using EventTickets.API.Middleware;
 using EventTickets.Core.Entities;
 using EventTickets.Core.Interfaces;
+using EventTickets.Core.Services;
 using EventTickets.Infrastructure.Data;
 using EventTickets.Infrastructure.Repositories;
+using EventTickets.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,12 +37,46 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 8;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
+// Configure JWT Authentication
+var jwtSecretKey = builder.Configuration["Jwt:SecretKey"];
+if (string.IsNullOrWhiteSpace(jwtSecretKey))
+    throw new InvalidOperationException("JWT SecretKey not configured. Use a secure random key in production.");
+
+var key = Encoding.UTF8.GetBytes(jwtSecretKey);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? "EventTicketsAPI",
+        ValidAudience = builder.Configuration["Jwt:Audience"] ?? "EventTicketsClient",
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+builder.Services.AddAuthorization();
+
 // Add MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+// Register Services
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Register Repositories
 builder.Services.AddScoped<IEventRepository, EventRepository>();
@@ -51,10 +90,6 @@ builder.Services.Configure<RateLimitOptions>(options =>
     options.Window = TimeSpan.FromMinutes(1);
 });
 
-// Add Authentication & Authorization
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
-
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -66,13 +101,29 @@ builder.Services.AddSwaggerGen(options =>
         Description = "API for managing events, tickets, and payments"
     });
 
-    // Add API key authentication for Swagger
-    options.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    // Add JWT authentication to Swagger
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
-        Description = "API Key authentication",
-        Name = "X-API-Key",
+        Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token.",
+        Name = "Authorization",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
     });
 
     // Include XML comments if available
@@ -135,6 +186,10 @@ app.Use(async (context, next) =>
 });
 
 app.UseCors("Frontend");
+
+// Authentication & Authorization
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Health check endpoint
 app.MapGet("/health", () => new { status = "healthy", timestamp = DateTime.UtcNow })
