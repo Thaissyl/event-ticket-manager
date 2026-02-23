@@ -4,6 +4,7 @@ using EventTickets.API.Middleware;
 using EventTickets.Core.Entities;
 using EventTickets.Core.Interfaces;
 using EventTickets.Core.Services;
+using EventTickets.Infrastructure.BackgroundServices;
 using EventTickets.Infrastructure.Data;
 using EventTickets.Infrastructure.Repositories;
 using EventTickets.Infrastructure.Services;
@@ -77,11 +78,19 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Progr
 
 // Register Services
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPromoCodeService, PromoCodeService>();
 
 // Register Repositories
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ITicketTierRepository, TicketTierRepository>();
+builder.Services.AddScoped<ICartReservationRepository, CartReservationRepository>();
+
+// Register Background Services
+builder.Services.AddHostedService<CartCleanupService>();
 
 // Configure rate limiting
 builder.Services.Configure<RateLimitOptions>(options =>
