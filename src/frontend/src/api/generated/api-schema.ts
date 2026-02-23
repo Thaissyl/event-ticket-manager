@@ -100,6 +100,23 @@ export interface CreateEventRequest {
   totalCapacity: number;
 }
 
+// User and Auth types
+export type UserRole = 'Admin' | 'Organizer' | 'Attendee';
+
+export interface UserResponse {
+  id: string;
+  email: string;
+  fullName: string;
+  role: UserRole;
+}
+
+export interface AuthResponse {
+  token: string;
+  refreshToken: string;
+  expiresAt: string;
+  user: UserResponse;
+}
+
 export interface CreateTicketTierRequest {
   eventId: string;
   name: string;

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -13,12 +14,16 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-2">
-            <Button size="lg" className="w-full">
-              Browse Events
-            </Button>
-            <Button size="lg" variant="outline" className="w-full">
-              Organizer Dashboard
-            </Button>
+            <Link href="/login">
+              <Button size="lg" className="w-full" variant="outline">
+                Browse Events
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button size="lg" className="w-full">
+                Organizer Dashboard
+              </Button>
+            </Link>
           </div>
           <p className="text-center text-sm text-muted-foreground">
             Powered by Next.js + ASP.NET Core
