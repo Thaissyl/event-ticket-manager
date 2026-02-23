@@ -7,6 +7,23 @@ pnpm-debug.log*
 .pnp
 .pnp.js
 
+# C# / .NET Build Outputs
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.cache
+*.dll
+*.pdb
+*.exe
+*.log
+*.resharper
+*.vspscc
+*.vshost.exe
+*.vsmdi
+*.sln.docstates
+
 # Environment Variables
 .env
 .env.local
