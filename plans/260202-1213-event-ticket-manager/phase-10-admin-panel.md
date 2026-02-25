@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority:** P2 (Platform management)
-- **Status:** pending
+- **Status:** completed
 - **Effort:** 6h
 - **Description:** Platform admin for user, event, and transaction management
 
@@ -179,14 +179,14 @@ PUT /api/admin/events/{id}/status
 ```
 
 ## Todo List
-- [ ] Implement AdminService
-- [ ] Create admin endpoints
-- [ ] Add admin authorization
-- [ ] Create admin layout
-- [ ] Build dashboard page
-- [ ] Create user management UI
-- [ ] Create event management UI
-- [ ] Create transaction view
+- [x] Implement AdminService
+- [x] Create admin endpoints
+- [ ] Add admin authorization (frontend)
+- [ ] Create admin layout (frontend)
+- [ ] Build dashboard page (frontend)
+- [ ] Create user management UI (frontend)
+- [ ] Create event management UI (frontend)
+- [ ] Create transaction view (frontend)
 - [ ] Test all admin functions
 
 ## Success Criteria

@@ -89,6 +89,7 @@ builder.Services.AddScoped<ICheckinService, CheckinService>();
 builder.Services.AddScoped<ITicketPdfService, TicketPdfService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<IExportService, ExportService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 // Register Repositories
 builder.Services.AddScoped<IEventRepository, EventRepository>();

@@ -1,5 +1,6 @@
 using EventTickets.Core.DTOs;
-using EventTickets.Core.Interfaces;
+using EventTickets.Core.Enums;
+using EventTickets.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTickets.API.Endpoints;
@@ -11,74 +12,104 @@ public static class AdminEndpoints
         var group = app.MapGroup("/api/admin")
             .WithTags("Admin")
             .WithOpenApi();
+        // TODO: Add .RequireAuthorization("Admin") when authorization is implemented
 
-        // GET /api/admin/users - List all users
-        group.MapGet("/users", async (CancellationToken ct) =>
-        {
-            // TODO: Add admin authorization
-            // TODO: Return paginated user list with order counts
-
-            return Results.Ok(new ApiResponse<object>(new { message = "Admin endpoints will be implemented" }, "Admin features pending Phase 04"));
-        })
-        .WithName("GetAllUsers")
-        .WithSummary("List all users (admin only)")
-        .WithOpenApi();
-
-        // GET /api/admin/events - List all events (including drafts)
-        group.MapGet("/events", async (
-            [FromServices] IEventRepository eventRepo,
-            CancellationToken ct) =>
-        {
-            // TODO: Add admin authorization
-            // TODO: Return all events regardless of status
-            // TODO: Include organizer info
-
-            return Results.Ok(new ApiResponse<object>(new { message = "Admin endpoints will be implemented" }, "Admin features pending Phase 04"));
-        })
-        .WithName("GetAllEvents")
-        .WithSummary("List all events (admin only)")
-        .WithOpenApi();
-
-        // GET /api/admin/stats - Get platform statistics
+        // GET /api/admin/stats - Platform statistics
         group.MapGet("/stats", async (
-            [FromServices] IEventRepository eventRepo,
-            CancellationToken ct) =>
+            [FromServices] IAdminService adminService,
+            CancellationToken ct = default) =>
         {
-            // TODO: Add admin authorization
-            // TODO: Calculate platform-wide statistics
-
-            var stats = new PlatformStatsResponse(
-                TotalUsers: 0,
-                TotalEvents: await eventRepo.CountAsync(ct),
-                PublishedEvents: 0,
-                TotalOrders: 0,
-                TotalRevenue: 0,
-                ActiveEvents: 0
-            );
-
+            var stats = await adminService.GetPlatformStatsAsync(ct);
             return Results.Ok(new ApiResponse<PlatformStatsResponse>(stats));
         })
         .WithName("GetPlatformStats")
         .WithSummary("Get platform statistics (admin only)")
         .WithOpenApi();
 
+        // GET /api/admin/users - List users (paginated, searchable)
+        group.MapGet("/users", async (
+            [FromServices] IAdminService adminService,
+            string? search,
+            UserRole? role,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 20,
+            CancellationToken ct = default) =>
+        {
+            var result = await adminService.ListUsersAsync(search, role, page, pageSize, ct);
+            return Results.Ok(new ApiResponse<object>(result, "User list retrieved"));
+        })
+        .WithName("ListUsers")
+        .WithSummary("List users with pagination (admin only)")
+        .WithOpenApi();
+
+        // PUT /api/admin/users/{id}/role - Update user role
+        group.MapPut("/users/{id:guid}/role", async (
+            Guid id,
+            [FromServices] IAdminService adminService,
+            [FromBody] UpdateUserRoleRequest request,
+            CancellationToken ct = default) =>
+        {
+            var success = await adminService.UpdateUserRoleAsync(id, request.Role, ct);
+            if (!success)
+                return Results.NotFound(new ApiResponse<object>(null, "User not found"));
+
+            return Results.Ok(new ApiResponse<object>(new { id, role = request.Role.ToString() }, "User role updated"));
+        })
+        .WithName("UpdateUserRole")
+        .WithSummary("Update user role (admin only)")
+        .WithOpenApi();
+
+        // GET /api/admin/events - List all events
+        group.MapGet("/events", async (
+            [FromServices] IAdminService adminService,
+            string? search,
+            EventStatus? status,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 20,
+            CancellationToken ct = default) =>
+        {
+            var result = await adminService.ListAllEventsAsync(search, status, page, pageSize, ct);
+            return Results.Ok(new ApiResponse<object>(result, "Event list retrieved"));
+        })
+        .WithName("ListAllEvents")
+        .WithSummary("List all events with pagination (admin only)")
+        .WithOpenApi();
+
         // PUT /api/admin/events/{id}/status - Update event status
         group.MapPut("/events/{id:guid}/status", async (
             Guid id,
+            [FromServices] IAdminService adminService,
             [FromBody] UpdateEventStatusRequest request,
-            [FromServices] IEventRepository eventRepo,
-            CancellationToken ct) =>
+            CancellationToken ct = default) =>
         {
-            // TODO: Add admin authorization
-            // TODO: Update event status
-            // TODO: Notify organizer
+            if (!Enum.TryParse<EventStatus>(request.Status, out var status))
+                return Results.BadRequest(new ApiResponse<object>(null, "Invalid status"));
 
-            return Results.Ok(new ApiResponse<object>(new { message = "Admin endpoints will be implemented" }, "Admin features pending Phase 04"));
+            var success = await adminService.UpdateEventStatusAsync(id, status, request.Reason, ct);
+            if (!success)
+                return Results.NotFound(new ApiResponse<object>(null, "Event not found"));
+
+            return Results.Ok(new ApiResponse<object>(new { id, status }, "Event status updated"));
         })
         .WithName("UpdateEventStatus")
         .WithSummary("Update event status (admin only)")
         .WithOpenApi();
+
+        // GET /api/admin/transactions - List transactions
+        group.MapGet("/transactions", async (
+            [FromServices] IAdminService adminService,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 20,
+            CancellationToken ct = default) =>
+        {
+            var result = await adminService.ListTransactionsAsync(page, pageSize, ct);
+            return Results.Ok(new ApiResponse<object>(result, "Transactions retrieved"));
+        })
+        .WithName("ListTransactions")
+        .WithSummary("List payment transactions (admin only)")
+        .WithOpenApi();
     }
 }
 
-public record UpdateEventStatusRequest(string Status);
+public record UpdateUserRoleRequest(UserRole Role);
+public record UpdateEventStatusRequest(string Status, string? Reason);
