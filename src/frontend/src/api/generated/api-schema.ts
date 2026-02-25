@@ -163,3 +163,25 @@ export interface CreateOrderItemRequest {
   ticketTierId: string;
   quantity: number;
 }
+
+// Payment types
+export type PaymentStatus = 'Pending' | 'Completed' | 'Failed';
+
+export interface PaymentResponse {
+  paymentId: string;
+  orderId: string;
+  paymentCode: string;
+  qrCodeUrl: string;
+  amount: number;
+  expiresAt: string;
+}
+
+export interface PaymentStatusResponse {
+  paymentId: string;
+  orderId: string;
+  amount: number;
+  status: PaymentStatus;
+  paymentCode: string;
+  createdAt: string;
+  paidAt?: string;
+}

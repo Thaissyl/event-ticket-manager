@@ -19,6 +19,7 @@ import type {
   CreateTicketTierRequest,
   AddToCartRequest,
   CreateOrderRequest,
+  PaymentStatusResponse,
 } from './api-schema';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -210,6 +211,17 @@ class ApiClient {
       method: 'POST',
       body: JSON.stringify(data),
     });
+  }
+
+  // Payments
+  async createPayment(orderId: string): Promise<{ paymentId: string; orderId: string; paymentCode: string; qrCodeUrl: string; amount: number; expiresAt: string }> {
+    return this.request(`/payments/${orderId}/create`, {
+      method: 'POST',
+    });
+  }
+
+  async getPaymentStatus(orderId: string): Promise<PaymentStatusResponse> {
+    return this.request<PaymentStatusResponse>(`/payments/status/${orderId}`);
   }
 
   // Health Check
