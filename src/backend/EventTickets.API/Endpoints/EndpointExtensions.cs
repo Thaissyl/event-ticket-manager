@@ -10,6 +10,7 @@ public static class EndpointExtensions
         app.MapTicketTierEndpoints();
         app.MapCartEndpoints();
         app.MapPaymentEndpoints();
+        app.MapTicketEndpoints();
         app.MapCheckinEndpoints();
         app.MapAnalyticsEndpoints();
         app.MapAdminEndpoints();

@@ -82,15 +82,35 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPromoCodeService, PromoCodeService>();
+builder.Services.AddScoped<IVietQrService, VietQrService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IQrCodeService, QrCodeService>();
+builder.Services.AddScoped<ICheckinService, CheckinService>();
+builder.Services.AddScoped<ITicketPdfService, TicketPdfService>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddScoped<IExportService, ExportService>();
 
 // Register Repositories
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ITicketTierRepository, TicketTierRepository>();
 builder.Services.AddScoped<ICartReservationRepository, CartReservationRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<ISePayWebhookRepository, SePayWebhookRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
 // Register Background Services
 builder.Services.AddHostedService<CartCleanupService>();
+builder.Services.AddHostedService<PaymentTimeoutService>();
+builder.Services.AddHostedService<PaymentReconciliationService>();
+
+// Configure SePay options
+builder.Services.Configure<SePayOptions>(
+    builder.Configuration.GetSection(SePayOptions.SectionName));
+
+// Configure QrCode options
+builder.Services.Configure<QrCodeOptions>(
+    builder.Configuration.GetSection(QrCodeOptions.SectionName));
 
 // Configure rate limiting
 builder.Services.Configure<RateLimitOptions>(options =>

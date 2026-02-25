@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority:** P2 (Value-add for organizers)
-- **Status:** pending
+- **Status:** completed
 - **Effort:** 8h
 - **Description:** Sales analytics, attendance tracking, data export
 
@@ -191,15 +191,15 @@ ORDER BY date;
 ```
 
 ## Todo List
-- [ ] Implement AnalyticsService
-- [ ] Create analytics endpoints
-- [ ] Implement export service
-- [ ] Create export endpoints
-- [ ] Build stat cards
-- [ ] Create sales trend chart
-- [ ] Create tier breakdown chart
-- [ ] Build recent orders table
-- [ ] Add export functionality
+- [x] Implement AnalyticsService
+- [x] Create analytics endpoints
+- [x] Implement export service
+- [x] Create export endpoints
+- [ ] Build stat cards (frontend)
+- [ ] Create sales trend chart (frontend)
+- [ ] Create tier breakdown chart (frontend)
+- [ ] Build recent orders table (frontend)
+- [ ] Add export functionality (frontend)
 - [ ] Test with sample data
 
 ## Success Criteria

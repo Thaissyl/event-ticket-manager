@@ -54,5 +54,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         builder.Entity<SePayWebhook>()
             .HasIndex(w => w.SePayTransactionId)
             .IsUnique();
+
+        builder.Entity<Payment>()
+            .HasIndex(p => p.SePayTransactionId)
+            .IsUnique();
+
+        builder.Entity<Payment>()
+            .HasIndex(p => p.OrderId)
+            .IsUnique();
     }
 }
